@@ -2,17 +2,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 public class GuessingGameTab extends Tab{
 
@@ -38,7 +30,7 @@ public class GuessingGameTab extends Tab{
         txtFld.setLayoutY(50);
         txtFld.setAlignment(Pos.CENTER);
 
-        label.setText("Guesses Left: ");
+        label.setText("Guesses Left: " + game.getGuessesLeft());
         label.setLayoutX(10);
         label.setLayoutY(10);
         label.setTextFill(Color.web("#ff0000"));
@@ -58,23 +50,18 @@ public class GuessingGameTab extends Tab{
         tileButtons.getChildren().addAll(label, txtFld, guess, reset, exit);
 
         exit.setOnAction(e -> game.exitGame());
-        reset.setOnAction(e -> game.resetGame(txtFld, label));
-        guess.setOnAction(e -> guessButtonPressed(game, txtFld, label));
+        reset.setOnAction(e -> game.resetGame(txtFld, label, guess));
+        guess.setOnAction(e -> {
+            game.run(txtFld.getText(), txtFld, label, guess);
+        });
 
         txtFld.setOnKeyPressed((event) -> {
             if(event.getCode() == KeyCode.ENTER) {
-                guessButtonPressed(game, txtFld, label);
+                game.run(txtFld.getText(), txtFld, label, guess);
             }
         });
 
         this.setContent(tileButtons);
-    }
-
-    public void guessButtonPressed(GuessingGame game, TextField txtFld, Label label){
-        game.run(txtFld.getText());
-        txtFld.clear();
-        txtFld.requestFocus();
-        label.setText("Guesses Left: " + Integer.toString(game.getGuessesLeft()));
     }
 
 }

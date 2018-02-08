@@ -40,6 +40,8 @@ public class Main extends Application {
         prizes.setText("Prizes");
         prizes.setContent(new Rectangle(windowWidth,windowHeight, Color.BLUE));
 
+        prizes.setDisable(true);
+
         tabPane.getTabs().add(guessingGameTab);
         tabPane.getTabs().add(lotteryGame);
         tabPane.getTabs().add(prizes);
