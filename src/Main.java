@@ -1,8 +1,5 @@
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import  javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.StackPane;
@@ -29,7 +26,11 @@ public class Main extends Application {
 
         TabPane tabPane = new TabPane();
 
-        Tab guessingGame = GuessingGame.guessingGameTab(windowWidth, windowHeight);
+        //Tab guessingGame = GuessingGame.guessingGameTab(windowWidth, windowHeight);
+
+        Tab guessingGameTab = new GuessingGameTab();
+
+
 
         Tab lotteryGame = new Tab();
         lotteryGame.setText("Lottery Game");
@@ -39,7 +40,7 @@ public class Main extends Application {
         prizes.setText("Prizes");
         prizes.setContent(new Rectangle(windowWidth,windowHeight, Color.BLUE));
 
-        tabPane.getTabs().add(guessingGame);
+        tabPane.getTabs().add(guessingGameTab);
         tabPane.getTabs().add(lotteryGame);
         tabPane.getTabs().add(prizes);
 
@@ -55,11 +56,5 @@ public class Main extends Application {
         primaryStage.show();
 
     }
-
-
-//    public void guessingGameTab(){
-//        Button exit = new Button("Exit");
-//    }
-
 
 }
