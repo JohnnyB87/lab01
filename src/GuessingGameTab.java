@@ -38,13 +38,11 @@ public class GuessingGameTab extends GameTab implements GameRules{
         pane.setBackground(new Background(new BackgroundFill(Color.web("#ff0000"), CornerRadii.EMPTY, Insets.EMPTY)));
         super.addPane(pane);
 
-
-
         super.getExit().setOnAction(e -> exitGame());
         super.getReset().setOnAction(e -> resetGame());
         super.getGuess().setOnAction(e -> guessButtonPressed());
 
-        txtFld.setOnKeyPressed((event) -> {
+        this.txtFld.setOnKeyPressed((event) -> {
             if(event.getCode() == KeyCode.ENTER) {
                 guessButtonPressed();
             }
@@ -91,10 +89,6 @@ public class GuessingGameTab extends GameTab implements GameRules{
         else {
             higherOrLower(guess);
             this.guessesLeft--;
-
-//            Alert alert = new Alert(AlertType.INFORMATION,
-//                    "You have " + this.guessesLeft + " guesses Left.", ButtonType.OK);
-//            alert.showAndWait();
         }
     }
 

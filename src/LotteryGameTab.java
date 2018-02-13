@@ -42,14 +42,14 @@ public class LotteryGameTab extends GameTab implements GameRules{
 
         super.addPane(pane);
 
-        super.getExit().setOnAction(e -> this.exitGame());
-        super.getReset();
-        super.getGuess();
+        super.getExit().setOnAction(e -> exitGame());
+        super.getReset().setOnAction(e -> resetGame());
+        super.getGuess().setOnAction(e -> run(""));
     }
 
     @Override
     public void run(String s) {
-
+        System.out.println("LOTTERY GAME TEST");
     }
 
     @Override
