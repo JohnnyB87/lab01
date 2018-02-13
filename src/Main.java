@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private int windowWidth = 300;
-    private int windowHeight = 300;
+    private int windowWidth = 400;
+    private int windowHeight = 400;
 
     public static void main(String[] args){
         launch(args);
@@ -28,7 +28,8 @@ public class Main extends Application {
 
         //Tab guessingGame = GuessingGame.guessingGameTab(windowWidth, windowHeight);
 
-        Tab guessingGameTab = new GuessingGameTab();
+        Tab guessingGameTab = new GuessingGameTab("Guessing Game","Guess");
+        Tab lotteryGameTab = new LotteryGameTab("Lottery Game","Submit");
 
 
 
@@ -43,7 +44,7 @@ public class Main extends Application {
         prizes.setDisable(true);
 
         tabPane.getTabs().add(guessingGameTab);
-        tabPane.getTabs().add(lotteryGame);
+        tabPane.getTabs().add(lotteryGameTab);
         tabPane.getTabs().add(prizes);
 
 

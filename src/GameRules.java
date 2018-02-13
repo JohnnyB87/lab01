@@ -1,3 +1,4 @@
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -7,7 +8,7 @@ public interface GameRules {
 
     void checkResult(int i);
 
-    void resetGame(TextField t, Label l);
+    void resetGame(Node... node);
 
     void exitGame();
 
