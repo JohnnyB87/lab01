@@ -28,11 +28,9 @@ public class GameTab extends Tab{
         TilePane tileButtons = new TilePane(Orientation.HORIZONTAL);
         tileButtons.setBackground(new Background(new BackgroundFill(Color.BLUE,CornerRadii.EMPTY,Insets.EMPTY)));
         tileButtons.setAlignment(Pos.CENTER);
-        tileButtons.setHgap(10.0);
-        tileButtons.setVgap(8.0);
+//        tileButtons.setHgap(10.0);
+//        tileButtons.setVgap(8.0);
         tileButtons.setMinHeight(75);
-        //tileButtons.setBackground(new Background(new BackgroundFill
-                //(Color.web(colour),CornerRadii.EMPTY, Insets.EMPTY)));
 
         int buttonWidth = 60;
 
@@ -43,20 +41,11 @@ public class GameTab extends Tab{
         this.reset.setMinWidth(buttonWidth);
         this.reset.setMaxWidth(buttonWidth);
 
-
         tileButtons.getChildren().addAll(guess, reset, exit);
 
-
-       // pane.getChildren().add(tileButtons);
         this.pane.setBottom(tileButtons);
         this.setContent(this.pane);
 
-
-//        exit.setOnAction(e -> game.exitGame());
-//        reset.setOnAction(e -> game.resetGame(txtFld, label, guess));
-//        guess.setOnAction(e -> {
-//            game.run(txtFld.getText(), txtFld, label, guess);
-//        });
 
     }
 

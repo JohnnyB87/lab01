@@ -125,12 +125,16 @@ public class GuessingGameTab extends GameTab implements GameRules{
 
     @Override
     public void winner() {
-
+        int num = this.guessesLeft > 4 ? 4 : this.guessesLeft;
+        this.alert = new Alert(Alert.AlertType.INFORMATION,
+                "CONGRATULATIONS\nYou Win a"+ num + " star prize.",ButtonType.OK);
+        alert.showAndWait();
     }
 
     @Override
     public void loser() {
-
+        this.alert = new Alert(Alert.AlertType.INFORMATION,"YOU LOSE",ButtonType.OK);
+        alert.showAndWait();
     }
 
     @Override
