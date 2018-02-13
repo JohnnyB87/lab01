@@ -16,12 +16,14 @@ public class LotteryGameTab extends GameTab implements GameRules{
 
         GridPane pane = new GridPane();
 
+        RadioButton[] rbArray = new RadioButton[49];
+
         int count = 1;
         int column = 2;
         int row = 2;
         while(count < 50) {
-            RadioButton rb = new RadioButton(String.format("%02d",count));
-            pane.add(rb, column, row);
+            rbArray[count-1] = new RadioButton(String.format("%02d",count));
+            pane.add(rbArray[count-1], column, row);
             column++;
             if(count % 7 == 0){
                 row++;
@@ -34,14 +36,11 @@ public class LotteryGameTab extends GameTab implements GameRules{
         pane.setHgap(padding);
         pane.setVgap(padding);
         pane.setAlignment(Pos.CENTER);
-
-       // pane.setPadding(new Insets(padding,padding,padding,padding));
         pane.setBackground(new Background(new BackgroundFill(Color.web("#00ff00"), CornerRadii.EMPTY, Insets.EMPTY)));
-        //this.addPane(pane);
-
 
         super.addPane(pane);
 
+        super.getGuess().setDisable(true);
         super.getExit().setOnAction(e -> exitGame());
         super.getReset().setOnAction(e -> resetGame());
         super.getGuess().setOnAction(e -> run(""));

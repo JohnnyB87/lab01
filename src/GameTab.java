@@ -28,7 +28,7 @@ public class GameTab extends Tab{
         TilePane tileButtons = new TilePane(Orientation.HORIZONTAL);
         tileButtons.setBackground(new Background(new BackgroundFill(Color.BLUE,CornerRadii.EMPTY,Insets.EMPTY)));
         tileButtons.setAlignment(Pos.CENTER);
-//        tileButtons.setHgap(10.0);
+        tileButtons.setHgap(5.0);
 //        tileButtons.setVgap(8.0);
         tileButtons.setMinHeight(75);
 
