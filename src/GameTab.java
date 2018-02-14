@@ -53,15 +53,15 @@ public class GameTab extends Tab{
         this.pane.setCenter(node);
     }
 
-    public Button getExit() {
+    public Button getExitButton() {
         return exit;
     }
 
-    public Button getReset() {
+    public Button getResetButton() {
         return reset;
     }
 
-    public Button getGuess() {
+    public Button getGuessButton() {
         return guess;
     }
 

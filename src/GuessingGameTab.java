@@ -8,12 +8,22 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GuessingGameTab extends GameTab implements GameRules{
 
+    private Pane pane = new Pane();
     private TextField txtFld;
     private Label label;
+    private ArrayList<Label> records = new ArrayList<>();
+    private int recordPositionY = 110;
+
+    public boolean isWinner() {
+        return winner;
+    }
+
+    private boolean winner = false;
     private int guessesLeft = 6;
     private int num = generateNumber();
     private Alert alert;
@@ -21,7 +31,7 @@ public class GuessingGameTab extends GameTab implements GameRules{
     public GuessingGameTab(String title, String buttonName){
         super(title, buttonName);
 //        StackPane pane = new StackPane();
-        Pane pane = new Pane();
+
 
         this.txtFld = new TextField();
         this.txtFld.setLayoutX(125);
@@ -30,17 +40,17 @@ public class GuessingGameTab extends GameTab implements GameRules{
         this.txtFld.setMinWidth(150);
         this.txtFld.setAlignment(Pos.CENTER);
 
-        this.label = new Label(String.format("Guesses Left: %d", this.guessesLeft));
+        this.label = new Label(String.format("Guesses Left: "));
         this.label.setLayoutX(160);
         this.label.setLayoutY(80);
 
-        pane.getChildren().addAll(txtFld, label);
-        pane.setBackground(new Background(new BackgroundFill(Color.web("#ff0000"), CornerRadii.EMPTY, Insets.EMPTY)));
-        super.addPane(pane);
+        this.pane.getChildren().addAll(txtFld, label);
+        this.pane.setBackground(new Background(new BackgroundFill(Color.web("#ff0000"), CornerRadii.EMPTY, Insets.EMPTY)));
+        super.addPane(this.pane);
 
-        super.getExit().setOnAction(e -> exitGame());
-        super.getReset().setOnAction(e -> resetGame());
-        super.getGuess().setOnAction(e -> guessButtonPressed());
+        super.getExitButton().setOnAction(e -> exitGame());
+        super.getResetButton().setOnAction(e -> resetGame());
+        super.getGuessButton().setOnAction(e -> guessButtonPressed());
 
         this.txtFld.setOnKeyPressed((event) -> {
             if(event.getCode() == KeyCode.ENTER) {
@@ -48,6 +58,20 @@ public class GuessingGameTab extends GameTab implements GameRules{
             }
         });
     }
+
+    public TextField getTxtFld() {
+        return txtFld;
+    }
+
+    public Label getLabel() {
+        return label;
+    }
+
+
+
+
+
+
 
     public void guessButtonPressed(){
         run(this.txtFld.getText());
@@ -67,7 +91,7 @@ public class GuessingGameTab extends GameTab implements GameRules{
 
             if (this.guessesLeft == 0) {
                 this.txtFld.setDisable(true);
-                super.getGuess().setDisable(true);
+                super.getGuessButton().setDisable(true);
                 loser();
             }
 
@@ -82,8 +106,8 @@ public class GuessingGameTab extends GameTab implements GameRules{
 
     @Override
     public void checkResult(int guess) {
-        boolean winner = this.num == guess;
-        if(winner) {
+        this.winner = this.num == guess;
+        if(this.winner) {
             winner();
         }
         else {
@@ -105,6 +129,14 @@ public class GuessingGameTab extends GameTab implements GameRules{
             this.txtFld.clear();
             this.txtFld.requestFocus();
             this.txtFld.setDisable(false);
+            this.getGuessButton().setDisable(false);
+            for(Label l : this.records) {
+                l.setText("");
+                this.pane.getChildren().remove(l);
+            }
+            this.records.clear();
+
+            this.recordPositionY = 110;
             this.num = generateNumber();
         }
     }
@@ -125,9 +157,8 @@ public class GuessingGameTab extends GameTab implements GameRules{
 
     @Override
     public void winner() {
-        int num = this.guessesLeft > 4 ? 4 : this.guessesLeft;
         this.alert = new Alert(Alert.AlertType.INFORMATION,
-                "CONGRATULATIONS\nYou Win a"+ num + " star prize.",ButtonType.OK);
+                "CONGRATULATIONS\nYou Win a 4 star prize.",ButtonType.OK);
         alert.showAndWait();
     }
 
@@ -144,27 +175,41 @@ public class GuessingGameTab extends GameTab implements GameRules{
 
     public void higherOrLower(int guess) {
 
+        int recordPositionX = 160;
+        int size = this.records.size();
         String s = "You Guessed too ";
         this.alert = new Alert(Alert.AlertType.INFORMATION, s, ButtonType.OK);
 
-        s = guess > this.num ? s + "high." : s + "low.";
+        String higOrLow = guess > this.num ? "high." : "low.";
 
-        this.alert.setContentText(s);
+        this.records.add(new Label(String.format("Too %s: %d", higOrLow, guess)));
+        this.records.get(size).setLayoutY(this.recordPositionY += 10);
+        this.records.get(size).setLayoutX(recordPositionX);
+        this.records.get(size).setPadding(new Insets(15,15,15,15));
+        this.pane.getChildren().add(this.records.get(size));
+
+        System.out.println(this.pane.getChildren());
+
+        this.alert.setContentText(s + higOrLow);
         this.alert.showAndWait();
     }
 
     public boolean isNumber(String guess) {
+        String s = "";
         try {
-            Integer.parseInt(guess);
-            return true;
+            int n = Integer.parseInt(guess);
+            if(n > 0 && n < 101)
+                return true;
+            else
+                s = "Enter a number between 1 & 100 inclusive";
 
         }catch(NumberFormatException nfe){
-
-            this.alert = new Alert(Alert.AlertType.ERROR
-                    ,"Enter a valid number.", ButtonType.OK);
-            alert.showAndWait();
-            return false;
+            s = "Enter a number please.";
         }
+        this.alert = new Alert(Alert.AlertType.ERROR
+                ,s, ButtonType.OK);
+        alert.showAndWait();
+        return false;
     }
 
     public int generateNumber(){

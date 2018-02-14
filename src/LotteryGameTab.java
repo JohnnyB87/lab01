@@ -40,10 +40,10 @@ public class LotteryGameTab extends GameTab implements GameRules{
 
         super.addPane(pane);
 
-        super.getGuess().setDisable(true);
-        super.getExit().setOnAction(e -> exitGame());
-        super.getReset().setOnAction(e -> resetGame());
-        super.getGuess().setOnAction(e -> run(""));
+        super.getGuessButton().setDisable(true);
+        super.getExitButton().setOnAction(e -> exitGame());
+        super.getResetButton().setOnAction(e -> resetGame());
+        super.getGuessButton().setOnAction(e -> run(""));
     }
 
     @Override

@@ -28,20 +28,20 @@ public class Main extends Application {
 
         //Tab guessingGame = GuessingGame.guessingGameTab(windowWidth, windowHeight);
 
-        Tab guessingGameTab = new GuessingGameTab("Guessing Game","Guess");
+        GuessingGameTab guessingGameTab = new GuessingGameTab("Guessing Game","Guess");
         Tab lotteryGameTab = new LotteryGameTab("Lottery Game","Submit");
 
 
-
-        Tab lotteryGame = new Tab();
-        lotteryGame.setText("Lottery Game");
-        lotteryGame.setContent(new Rectangle(windowWidth,windowHeight, Color.LAVENDER));
+//
+//        Tab lotteryGame = new Tab();
+//        lotteryGame.setText("Lottery Game");
+//        lotteryGame.setContent(new Rectangle(windowWidth,windowHeight, Color.LAVENDER));
 
         Tab prizes = new Tab();
         prizes.setText("Prizes");
         prizes.setContent(new Rectangle(windowWidth,windowHeight, Color.BLUE));
 
-        prizes.setDisable(true);
+        prizes.setDisable(!guessingGameTab.isWinner());
 
         tabPane.getTabs().add(guessingGameTab);
         tabPane.getTabs().add(lotteryGameTab);
