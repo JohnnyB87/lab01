@@ -1,10 +1,7 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -26,33 +23,17 @@ public class Main extends Application {
 
         TabPane tabPane = new TabPane();
 
-        //Tab guessingGame = GuessingGame.guessingGameTab(windowWidth, windowHeight);
-
         GuessingGameTab guessingGameTab = new GuessingGameTab("Guessing Game","Guess");
-        Tab lotteryGameTab = new LotteryGameTab("Lottery Game","Submit");
-
-
-//
-//        Tab lotteryGame = new Tab();
-//        lotteryGame.setText("Lottery Game");
-//        lotteryGame.setContent(new Rectangle(windowWidth,windowHeight, Color.LAVENDER));
-
-        Tab prizes = new Tab();
-        prizes.setText("Prizes");
-        prizes.setContent(new Rectangle(windowWidth,windowHeight, Color.BLUE));
-
-        prizes.setDisable(!guessingGameTab.isWinner());
-
+        LotteryGameTab lotteryGameTab = new LotteryGameTab("Lottery Game","Submit");
+        PrizeTab prizes = guessingGameTab.getPrizeTab();
+        
         tabPane.getTabs().add(guessingGameTab);
         tabPane.getTabs().add(lotteryGameTab);
         tabPane.getTabs().add(prizes);
 
-
         StackPane layout = new StackPane();
-
         layout.getChildren().add(tabPane);
-
-
+        
         Scene scene = new Scene(layout, windowWidth, windowHeight);
 
         primaryStage.setScene(scene);

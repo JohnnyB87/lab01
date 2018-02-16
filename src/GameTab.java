@@ -3,22 +3,21 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 public class GameTab extends Tab{
 
-    private BorderPane pane = new BorderPane();
+	private static PrizeTab prizeTab = new PrizeTab();
+  	private BorderPane pane = new BorderPane();
     private Button exit = new Button();
     private Button reset = new Button();
     private Button guess = new Button();
 
     public GameTab(String title, String buttonName) {
 
-
         this.setText(title);
-
+        prizeTab.setDisable(true);
         String colour = "#111287";
 
         exit.setText("Exit");
@@ -33,19 +32,12 @@ public class GameTab extends Tab{
         tileButtons.setMinHeight(75);
 
         int buttonWidth = 60;
-
-        this.guess.setMinWidth(buttonWidth);
-        this.guess.setMaxWidth(buttonWidth);
-        this.exit.setMinWidth(buttonWidth);
-        this.exit.setMaxWidth(buttonWidth);
-        this.reset.setMinWidth(buttonWidth);
-        this.reset.setMaxWidth(buttonWidth);
+        setButtonsSize(buttonWidth);
 
         tileButtons.getChildren().addAll(guess, reset, exit);
 
         this.pane.setBottom(tileButtons);
         this.setContent(this.pane);
-
 
     }
 
@@ -65,5 +57,17 @@ public class GameTab extends Tab{
         return guess;
     }
 
+	public PrizeTab getPrizeTab() {
+		return prizeTab;
+	}
+	
+	public void setButtonsSize(int buttonWidth) {
+		this.guess.setMinWidth(buttonWidth);
+        this.guess.setMaxWidth(buttonWidth);
+        this.exit.setMinWidth(buttonWidth);
+        this.exit.setMaxWidth(buttonWidth);
+        this.reset.setMinWidth(buttonWidth);
+        this.reset.setMaxWidth(buttonWidth);
+	}
 
 }

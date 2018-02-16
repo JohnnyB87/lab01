@@ -1,6 +1,5 @@
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -13,25 +12,25 @@ import java.util.Random;
 
 public class GuessingGameTab extends GameTab implements GameRules{
 
+    //------------------------------------
+    //			ATTRIBUTES
+    //------------------------------------
     private Pane pane = new Pane();
     private TextField txtFld;
     private Label label;
     private ArrayList<Label> records = new ArrayList<>();
     private int recordPositionY = 110;
 
-    public boolean isWinner() {
-        return winner;
-    }
-
-    private boolean winner = false;
     private int guessesLeft = 6;
     private int num = generateNumber();
     private Alert alert;
 
+    //------------------------------------
+    //			CONSTRUCTOR
+    //------------------------------------
+    
     public GuessingGameTab(String title, String buttonName){
         super(title, buttonName);
-//        StackPane pane = new StackPane();
-
 
         this.txtFld = new TextField();
         this.txtFld.setLayoutX(125);
@@ -40,8 +39,8 @@ public class GuessingGameTab extends GameTab implements GameRules{
         this.txtFld.setMinWidth(150);
         this.txtFld.setAlignment(Pos.CENTER);
 
-        this.label = new Label(String.format("Guesses Left: "));
-        this.label.setLayoutX(160);
+        this.label = new Label(String.format("Guesses Left: %d", this.guessesLeft));
+        this.label.setLayoutX(125);
         this.label.setLayoutY(80);
 
         this.pane.getChildren().addAll(txtFld, label);
@@ -58,6 +57,10 @@ public class GuessingGameTab extends GameTab implements GameRules{
             }
         });
     }
+    
+    //------------------------------------
+    //			GETTERS
+    //------------------------------------
 
     public TextField getTxtFld() {
         return txtFld;
@@ -67,18 +70,9 @@ public class GuessingGameTab extends GameTab implements GameRules{
         return label;
     }
 
-
-
-
-
-
-
-    public void guessButtonPressed(){
-        run(this.txtFld.getText());
-        this.txtFld.clear();
-        this.txtFld.requestFocus();
-        this.label.setText(String.format("Guesses Left: ", this.guessesLeft));
-    }
+    //------------------------------------
+    //		IMPLEMENTED METHODS
+    //------------------------------------
 
     @Override
     public void run(String s) {
@@ -87,17 +81,11 @@ public class GuessingGameTab extends GameTab implements GameRules{
         boolean isInt = isNumber(s);
         if(isInt) {
             int guess = Integer.parseInt(s);
+            this.guessesLeft--;
             checkResult(guess);
-
-            if (this.guessesLeft == 0) {
-                this.txtFld.setDisable(true);
-                super.getGuessButton().setDisable(true);
-                loser();
-            }
 
             txtFld.clear();
             txtFld.requestFocus();
-            label.setText(String.format("Guesses Left: %d", this.guessesLeft));
 
             System.out.println("Number: " + this.num);
             System.out.println("Lives Left: " + this.guessesLeft);
@@ -106,20 +94,24 @@ public class GuessingGameTab extends GameTab implements GameRules{
 
     @Override
     public void checkResult(int guess) {
-        this.winner = this.num == guess;
-        if(this.winner) {
+        boolean winner = this.num == guess;
+        if(winner) {
             winner();
+        }
+        else if(this.guessesLeft == 0) {
+        	this.txtFld.setDisable(true);
+            super.getGuessButton().setDisable(true);
+            loser();
         }
         else {
             higherOrLower(guess);
-            this.guessesLeft--;
         }
     }
 
     @Override
     public void resetGame(Node... nodes) {
         this.alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "Are you sure you want to reset the game.\n All current progress will be lost?"
+                "Are you sure you want to reset the game.\nAll current progress will be lost?"
                 ,ButtonType.YES,ButtonType.NO);
         alert.showAndWait();
 
@@ -130,6 +122,7 @@ public class GuessingGameTab extends GameTab implements GameRules{
             this.txtFld.requestFocus();
             this.txtFld.setDisable(false);
             this.getGuessButton().setDisable(false);
+            
             for(Label l : this.records) {
                 l.setText("");
                 this.pane.getChildren().remove(l);
@@ -160,43 +153,56 @@ public class GuessingGameTab extends GameTab implements GameRules{
         this.alert = new Alert(Alert.AlertType.INFORMATION,
                 "CONGRATULATIONS\nYou Win a 4 star prize.",ButtonType.OK);
         alert.showAndWait();
+        prizes();
     }
 
     @Override
     public void loser() {
-        this.alert = new Alert(Alert.AlertType.INFORMATION,"YOU LOSE",ButtonType.OK);
+    	String str = String.format("YOU LOSE%nThe winning number was: %d", this.num);
+        this.alert = new Alert(Alert.AlertType.INFORMATION, str, ButtonType.OK);
         alert.showAndWait();
+        
     }
 
     @Override
     public void prizes() {
-
+        super.getPrizeTab().setDisable(false);
     }
 
+    //------------------------------------
+    //		EXTRA FUNCTIONALITY
+    //------------------------------------
+
+    public void guessButtonPressed(){
+        run(this.txtFld.getText());
+        this.txtFld.clear();
+        this.txtFld.requestFocus();
+        this.label.setText(String.format("Guesses Left: %d", this.guessesLeft));
+    }
+    
     public void higherOrLower(int guess) {
 
-        int recordPositionX = 160;
-        int size = this.records.size();
-        String s = "You Guessed too ";
-        this.alert = new Alert(Alert.AlertType.INFORMATION, s, ButtonType.OK);
-
-        String higOrLow = guess > this.num ? "high." : "low.";
+        int recordPositionX = 125;
+        int size = this.records.size(); 
+        String higOrLow = guess > this.num ? "high" : "low";
+        String str = String.format("You Guessed too %s.", higOrLow);
 
         this.records.add(new Label(String.format("Too %s: %d", higOrLow, guess)));
         this.records.get(size).setLayoutY(this.recordPositionY += 10);
         this.records.get(size).setLayoutX(recordPositionX);
-        this.records.get(size).setPadding(new Insets(15,15,15,15));
+        this.records.get(size).setPadding(new Insets(15,15,15,0));
         this.pane.getChildren().add(this.records.get(size));
 
-        System.out.println(this.pane.getChildren());
+        //System.out.println(this.pane.getChildren());
 
-        this.alert.setContentText(s + higOrLow);
+        this.alert = new Alert(Alert.AlertType.INFORMATION, str, ButtonType.OK);
         this.alert.showAndWait();
     }
 
     public boolean isNumber(String guess) {
         String s = "";
         try {
+        	
             int n = Integer.parseInt(guess);
             if(n > 0 && n < 101)
                 return true;
@@ -206,9 +212,10 @@ public class GuessingGameTab extends GameTab implements GameRules{
         }catch(NumberFormatException nfe){
             s = "Enter a number please.";
         }
-        this.alert = new Alert(Alert.AlertType.ERROR
-                ,s, ButtonType.OK);
+        
+        this.alert = new Alert(Alert.AlertType.ERROR, s, ButtonType.OK);
         alert.showAndWait();
+        
         return false;
     }
 

@@ -1,3 +1,4 @@
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -8,7 +9,7 @@ public interface GameRules {
 
     void checkResult(int i);
 
-    void resetGame(Node... node);
+    void resetGame(Node... n);
 
     void exitGame();
 
@@ -17,4 +18,6 @@ public interface GameRules {
     void loser();
 
     void prizes();
+    
+    boolean isNumber(String s);
 }
