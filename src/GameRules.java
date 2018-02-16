@@ -7,8 +7,6 @@ public interface GameRules {
 
     void run(String s);
 
-    void checkResult(int i);
-
     void resetGame(Node... n);
 
     void exitGame();

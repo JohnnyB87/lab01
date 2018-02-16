@@ -22,6 +22,7 @@ public class LotteryGameTab extends GameTab implements GameRules{
 	private ArrayList<Integer> numbersSelected = new ArrayList<>();
 	private int count = 0;
 	private boolean sixSelected = false;
+	private int matchingNumbers = 0;
 	//private ToggleGroup tg = new ToggleGroup();
 
     public LotteryGameTab(String title, String buttonName){
@@ -43,11 +44,7 @@ public class LotteryGameTab extends GameTab implements GameRules{
         super.getGuessButton().setDisable(true);
         super.getExitButton().setOnAction(e -> exitGame());
         super.getResetButton().setOnAction(e -> resetGame());
-        super.getGuessButton().setOnAction(e -> run(""));
-//        for(int i=0; i<this.rbArray.length;i++) {
-//        	RadioButton rb = this.rbArray[i];
-//        	rb.setOnAction(e -> onRadioButtonClick(rb));
-//        }
+        super.getGuessButton().setOnAction(e -> guessButtonPressed());
     }
 
     private void createRadioButtonLayout() {
@@ -71,29 +68,29 @@ public class LotteryGameTab extends GameTab implements GameRules{
 	}
     
     private void onRadioButtonClick(RadioButton rb) {
-    	//System.out.println(rb.getText());
-    	int n = Integer.parseInt(rb.getText());
-    	int size = this.numbersSelected.size();
-    	this.count = rb.isSelected() ? count+1 : count-1;
-    	
+    	boolean isSelected = rb.isSelected();
+        int size = this.rbArray.length;
+    	count = isSelected ? count+1 : count-1;
   
     	if(this.count == 6) {
+            int n;
     		this.sixSelected = true;
-    		for(int i=0; i<this.rbArray.length; i++) {
-    			if(!this.rbArray[i].isSelected()) {
+    		for(int i=0; i<size; i++) {
+    			if(!this.rbArray[i].isSelected())
     				this.rbArray[i].setDisable(true);
-    			}
     			else {
-    				this.numbersSelected.add(Integer.parseInt(this.rbArray[i].getText()));
-    			}
+                    n = Integer.parseInt(this.rbArray[i].getText());
+                    this.numbersSelected.add(n);
+                }
     		}
     		this.getGuessButton().setDisable(false);
     	}
     	else if(this.sixSelected) {
-    		for(int i=0; i<this.rbArray.length; i++) {
+    		for(int i=0; i<size; i++) {
     			this.rbArray[i].setDisable(false);
     		}
     		this.getGuessButton().setDisable(true);
+    		this.numbersSelected.clear();
     	}
     }
 
@@ -101,32 +98,48 @@ public class LotteryGameTab extends GameTab implements GameRules{
     	int size = 6;
     	int[] numbers = new int[size];
     	int n = new Random().nextInt(49) + 1;
-    	numbers[0] = n;
-    	boolean isDuplicate = false;
+    	boolean isDuplicate;
+        numbers[0] = n;
+
     	for(int i=1; i<size;) {
     		isDuplicate = false;
     		n = new Random().nextInt(49) + 1;
     		for(int j=0; j<i; j++) {
-    			isDuplicate = n == numbers[j] ? true : false;
-    			if(isDuplicate) break;
+    			if(n == numbers[j]){
+                    isDuplicate = true;
+                    break;
+                }
     		}
     		if(!isDuplicate) {
     			numbers[i] = n;
     			i++;
     		}
     	}
+
+        Arrays.sort(numbers);
     	return numbers;
     }
-    
+
+    private void guessButtonPressed(){
+        run("");
+        checkResult();
+    }
+
 	@Override
     public void run(String s) {
         System.out.println("LOTTERY GAME TEST");
-        System.out.println(Arrays.toString(this.winningNumbers));
+        System.out.println("Winning Numbers: " + Arrays.toString(this.winningNumbers));
+        System.out.println("Selected Numbers: " + this.numbersSelected);
     }
 
-    @Override
-    public void checkResult(int i) {
-
+    public void checkResult() {
+        int size = this.winningNumbers.length;
+        for(int i=0; i<size; i++){
+            for(int j=0; j<size; j++){
+                if(this.numbersSelected.get(i) == this.winningNumbers[j])
+                    this.matchingNumbers++;
+            }
+        }
     }
 
     @Override
@@ -137,6 +150,9 @@ public class LotteryGameTab extends GameTab implements GameRules{
     	}
     	super.getGuessButton().setDisable(true);
     	this.count = 0;
+    	this.winningNumbers = generateNumbers();
+    	this.numbersSelected.clear();
+    	this.matchingNumbers = 0;
     }
 
     @Override
@@ -152,7 +168,8 @@ public class LotteryGameTab extends GameTab implements GameRules{
             alert.close();
         }
     }
-    
+
+    @Override
     public boolean isNumber(String str) {
         try {
         	Integer.parseInt(str);
@@ -161,10 +178,6 @@ public class LotteryGameTab extends GameTab implements GameRules{
 
             return false;
         }
-        
-        
-    	
-    	
     }
 
     @Override
@@ -184,4 +197,5 @@ public class LotteryGameTab extends GameTab implements GameRules{
     public void prizes() {
 
     }
+
 }

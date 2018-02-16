@@ -92,7 +92,6 @@ public class GuessingGameTab extends GameTab implements GameRules{
         }
     }
 
-    @Override
     public void checkResult(int guess) {
         boolean winner = this.num == guess;
         if(winner) {
