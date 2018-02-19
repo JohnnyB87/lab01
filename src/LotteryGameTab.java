@@ -32,7 +32,7 @@ public class LotteryGameTab extends GameTab implements GameRules{
 
         //winner();
         //run("");
-        loser();
+        //loser();
 
         int padding = 5;
         pane.setHgap(padding);
