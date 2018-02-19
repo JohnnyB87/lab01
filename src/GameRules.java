@@ -16,6 +16,4 @@ public interface GameRules {
     void loser();
 
     void prizes();
-    
-    boolean isNumber(String s);
 }

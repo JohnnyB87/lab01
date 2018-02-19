@@ -32,6 +32,7 @@ public class LotteryGameTab extends GameTab implements GameRules{
 
         //winner();
         //run("");
+        loser();
 
         int padding = 5;
         pane.setHgap(padding);
@@ -122,7 +123,7 @@ public class LotteryGameTab extends GameTab implements GameRules{
 
     private void guessButtonPressed(){
         run("");
-        checkResult();
+
     }
 
 	@Override
@@ -130,6 +131,13 @@ public class LotteryGameTab extends GameTab implements GameRules{
         System.out.println("LOTTERY GAME TEST");
         System.out.println("Winning Numbers: " + Arrays.toString(this.winningNumbers));
         System.out.println("Selected Numbers: " + this.numbersSelected);
+        super.getGuessButton().setDisable(true);
+        checkResult();
+        if(this.matchingNumbers > 3)
+            winner();
+        else
+            loser();
+        this.matchingNumbers = 0;
     }
 
     public void checkResult() {
@@ -170,31 +178,27 @@ public class LotteryGameTab extends GameTab implements GameRules{
     }
 
     @Override
-    public boolean isNumber(String str) {
-        try {
-        	Integer.parseInt(str);
-            return true;
-        }catch(NumberFormatException nfe){
-
-            return false;
-        }
-    }
-
-    @Override
     public void winner() {
+        String match = Integer.toString(this.matchingNumbers);
     	this.alert = new Alert(Alert.AlertType.INFORMATION,
-                "CONGRATULATIONS\nYou Win a 4 star prize.",ButtonType.OK);
+                String.format("CONGRATULATIONS\nYou Win a %s star prize.",match),ButtonType.OK);
         alert.showAndWait();
         super.getPrizeTab().setDisable(false);
+        super.getPrizeTab().loadPrizes(this.matchingNumbers);
+        super.getPrizeTab().showPrizes();
     }
 
     @Override
     public void loser() {
-
+        String array = Arrays.toString(this.winningNumbers);
+        String str = String.format("YOU LOSE%nThe winning numbers were: %s", array);
+        this.alert = new Alert(Alert.AlertType.INFORMATION, str, ButtonType.OK);
+        alert.showAndWait();
     }
 
     @Override
     public void prizes() {
+        super.getPrizeTab().setDisable(false);
 
     }
 
