@@ -1,23 +1,16 @@
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class PrizeTab extends Tab{
 //    HashMap<String, HashMap<Integer, String>> prizes = new HashMap();
@@ -70,26 +63,28 @@ public class PrizeTab extends Tab{
         }
         buttons = new Button[this.prizes.size()];
 
+        this.tileButtons.getChildren().clear();
+
     }
 
     public void showPrizes(){
 
         int i = 0;
+
         for(HashMap.Entry<String,String> entry : this.prizes.entrySet()){
-            this.buttons[i] = new Button(entry.getValue());
+            this.buttons[i] = new Button(entry.getKey());
+            System.out.println(prizes.get(buttons[i].getText()));
             //str += e.getValue() + "\n";
             this.tileButtons.getChildren().add(this.buttons[i]);
             int j = i;
             this.buttons[i].setOnAction(e -> {
-                String str = String.format("You chose the %s prize.%n", this.buttons[j].getText());
+                String str = String.format("You chose the %s prize.%n", prizes.get(this.buttons[j].getText()));
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, str);
                 alert.showAndWait();
             });
 
             i++;
         }
-
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION, str);
-//        alert.showAndWait();
     }
+
 }
