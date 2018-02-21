@@ -6,3 +6,4 @@
 4,foxtrot,Trip to Kerry
 6,golf,One-way Trip to Mars
 4,hotel,Trip to Dublin
+5,juliet,Trip to Dubai

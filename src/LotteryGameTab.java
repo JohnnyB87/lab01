@@ -13,7 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-public class LotteryGameTab extends GameTab implements GameRules{
+public class LotteryGameTab extends GameTab {
 
 	private Alert alert;
 	private RadioButton[] rbArray = new RadioButton[49];
@@ -30,10 +30,6 @@ public class LotteryGameTab extends GameTab implements GameRules{
 
         createRadioButtonLayout();
 
-        //winner();
-        //run("");
-        //loser();
-
         int padding = 5;
         pane.setHgap(padding);
         pane.setVgap(padding);
@@ -41,9 +37,8 @@ public class LotteryGameTab extends GameTab implements GameRules{
         pane.setBackground(new Background(new BackgroundFill(Color.web("#00ff00"), CornerRadii.EMPTY, Insets.EMPTY)));
 
         super.addPane(pane);
-
         super.getGuessButton().setDisable(true);
-        super.getExitButton().setOnAction(e -> exitGame());
+
         super.getResetButton().setOnAction(e -> resetGame());
         super.getGuessButton().setOnAction(e -> guessButtonPressed());
     }
@@ -126,13 +121,15 @@ public class LotteryGameTab extends GameTab implements GameRules{
 
     }
 
-	@Override
+    @Override
     public void run(String s) {
         System.out.println("LOTTERY GAME TEST");
         System.out.println("Winning Numbers: " + Arrays.toString(this.winningNumbers));
         System.out.println("Selected Numbers: " + this.numbersSelected);
         super.getGuessButton().setDisable(true);
-        checkResult();
+
+        int size = this.winningNumbers.length;
+        checkResult(size);
         if(this.matchingNumbers > 3)
             winner();
         else
@@ -140,18 +137,18 @@ public class LotteryGameTab extends GameTab implements GameRules{
         this.matchingNumbers = 0;
     }
 
-    public void checkResult() {
-        int size = this.winningNumbers.length;
-        for(int i=0; i<size; i++){
-            for(int j=0; j<size; j++){
+    @Override
+    public void checkResult(int size) {
+        for(int i=0; i<size; i++)
+            for(int j=0; j<size; j++)
                 if(this.numbersSelected.get(i) == this.winningNumbers[j])
                     this.matchingNumbers++;
-            }
-        }
     }
 
     @Override
-    public void resetGame(Node... node) {
+    public void resetGame() {
+        super.resetGame();
+
     	for(RadioButton r : this.rbArray) {
     		r.setSelected(false);
     		r.setDisable(false);
@@ -161,20 +158,7 @@ public class LotteryGameTab extends GameTab implements GameRules{
     	this.winningNumbers = generateNumbers();
     	this.numbersSelected.clear();
     	this.matchingNumbers = 0;
-    }
-
-    @Override
-    public void exitGame() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "Are you sure you want to quit?",ButtonType.YES,ButtonType.NO);
-        alert.showAndWait();
-
-        if(alert.getResult() == ButtonType.YES) {
-            Platform.exit();
-        }
-        else {
-            alert.close();
-        }
+    	super.getPrizeTab().setDisable(true);
     }
 
     @Override
@@ -196,10 +180,5 @@ public class LotteryGameTab extends GameTab implements GameRules{
         alert.showAndWait();
     }
 
-    @Override
-    public void prizes() {
-        super.getPrizeTab().setDisable(false);
-
-    }
 
 }

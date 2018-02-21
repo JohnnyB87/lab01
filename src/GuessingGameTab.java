@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GuessingGameTab extends GameTab implements GameRules{
+public class GuessingGameTab extends GameTab {
 
     //------------------------------------
     //			ATTRIBUTES
@@ -21,6 +21,7 @@ public class GuessingGameTab extends GameTab implements GameRules{
     private ArrayList<Label> records = new ArrayList<>();
     private int recordPositionY = 110;
 
+    private final int GAMESTARRATING = 4;
     private int guessesLeft = 6;
     private int num = generateNumber();
     private Alert alert;
@@ -47,7 +48,6 @@ public class GuessingGameTab extends GameTab implements GameRules{
         this.pane.setBackground(new Background(new BackgroundFill(Color.web("#ff0000"), CornerRadii.EMPTY, Insets.EMPTY)));
         super.addPane(this.pane);
 
-        super.getExitButton().setOnAction(e -> exitGame());
         super.getResetButton().setOnAction(e -> resetGame());
         super.getGuessButton().setOnAction(e -> guessButtonPressed());
 
@@ -92,6 +92,7 @@ public class GuessingGameTab extends GameTab implements GameRules{
         }
     }
 
+    @Override
     public void checkResult(int guess) {
         boolean winner = this.num == guess;
         if(winner) {
@@ -108,13 +109,10 @@ public class GuessingGameTab extends GameTab implements GameRules{
     }
 
     @Override
-    public void resetGame(Node... nodes) {
-        this.alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "Are you sure you want to reset the game.\nAll current progress will be lost?"
-                ,ButtonType.YES,ButtonType.NO);
-        alert.showAndWait();
+    public void resetGame() {
+        super.resetGame();
 
-        if(this.alert.getResult() == ButtonType.YES) {
+        if(super.getAlert().getResult() == ButtonType.YES) {
             this.guessesLeft = 6;
             this.label.setText("Guesses Left: " + Integer.toString(guessesLeft));
             this.txtFld.clear();
@@ -130,32 +128,21 @@ public class GuessingGameTab extends GameTab implements GameRules{
 
             this.recordPositionY = 110;
             this.num = generateNumber();
-        }
-    }
-
-    @Override
-    public void exitGame() {
-        this.alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "Are you sure you want to quit?",ButtonType.YES,ButtonType.NO);
-        alert.showAndWait();
-
-        if(alert.getResult() == ButtonType.YES) {
-            Platform.exit();
-        }
-        else {
-            alert.close();
+            super.getPrizeTab().setDisable(true);
         }
     }
 
     @Override
     public void winner() {
         this.alert = new Alert(Alert.AlertType.INFORMATION,
-                "CONGRATULATIONS\nYou Win a 4 star prize.",ButtonType.OK);
+                String.format("CONGRATULATIONS\nYou Win a %s star prize.", this.GAMESTARRATING),ButtonType.OK);
         alert.showAndWait();
-        prizes();
+        super.getPrizeTab().setDisable(false);
+        super.getPrizeTab().loadPrizes(this.GAMESTARRATING);
+        super.getPrizeTab().showPrizes();
     }
 
-    @Override
+
     public void loser() {
     	String str = String.format("YOU LOSE%nThe winning number was: %d", this.num);
         this.alert = new Alert(Alert.AlertType.INFORMATION, str, ButtonType.OK);
@@ -163,10 +150,6 @@ public class GuessingGameTab extends GameTab implements GameRules{
         
     }
 
-    @Override
-    public void prizes() {
-        super.getPrizeTab().setDisable(false);
-    }
 
     //------------------------------------
     //		EXTRA FUNCTIONALITY
@@ -199,7 +182,7 @@ public class GuessingGameTab extends GameTab implements GameRules{
     }
 
     public boolean isNumber(String guess) {
-        String s = "";
+        String s;
         try {
         	
             int n = Integer.parseInt(guess);

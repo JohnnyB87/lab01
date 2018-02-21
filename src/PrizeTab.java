@@ -78,7 +78,7 @@ public class PrizeTab extends Tab{
             this.tileButtons.getChildren().add(this.buttons[i]);
             int j = i;
             this.buttons[i].setOnAction(e -> {
-                String str = String.format("You chose the %s prize.%n", prizes.get(this.buttons[j].getText()));
+                String str = String.format("You won a %s prize.%n", prizes.get(this.buttons[j].getText()));
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, str);
                 alert.showAndWait();
             });
