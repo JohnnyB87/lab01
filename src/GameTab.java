@@ -106,13 +106,16 @@ public abstract class GameTab extends Tab{
         }
     }
 
+    public void winner(){
+        this.exit.setDisable(true);
+        this.reset.setDisable(true);
+    }
+
     //------------------------------------
     //			ABSTRACT METHODS
     //------------------------------------
 
     public abstract void run(String s);
-
-    public abstract void winner();
 
     public abstract void loser();
 

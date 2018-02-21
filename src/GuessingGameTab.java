@@ -132,6 +132,7 @@ public class GuessingGameTab extends GameTab {
 
     @Override
     public void winner() {
+        super.winner();
         this.alert = new Alert(Alert.AlertType.INFORMATION,
                 String.format("CONGRATULATIONS\nYou Win a %s star prize.", this.GAMESTARRATING), ButtonType.OK);
         alert.showAndWait();

@@ -112,7 +112,8 @@ public class LotteryGameTab extends GameTab {
 
     private void guessButtonPressed(){
         run("");
-
+//        super.getResetButton().setDisable(true);
+//        super.getExitButton().setDisable(true);
     }
 
     @Override
@@ -157,6 +158,7 @@ public class LotteryGameTab extends GameTab {
 
     @Override
     public void winner() {
+        super.winner();
         String match = Integer.toString(this.matchingNumbers);
 
         this.alert = new Alert(Alert.AlertType.INFORMATION,
