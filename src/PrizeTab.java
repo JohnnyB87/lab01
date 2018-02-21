@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class PrizeTab extends Tab{
-//    HashMap<String, HashMap<Integer, String>> prizes = new HashMap();
+
     private HashMap<String, String> prizes;
     private TilePane tileButtons;
     private Button[] buttons;
@@ -50,7 +50,6 @@ public class PrizeTab extends Tab{
                 if(prizeValue == n) {
                     String key = array[1];
                     String value = array[2];
-                    //prizes.get(prizeValue).put(key,value);
                     prizes.put(key, value);
                 }
                 newLine = br.readLine();
@@ -68,7 +67,6 @@ public class PrizeTab extends Tab{
     }
 
     public void showPrizes(){
-
         int i = 0;
 
         for(HashMap.Entry<String,String> entry : this.prizes.entrySet()){

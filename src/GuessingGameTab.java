@@ -1,7 +1,5 @@
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
@@ -135,7 +133,7 @@ public class GuessingGameTab extends GameTab {
     @Override
     public void winner() {
         this.alert = new Alert(Alert.AlertType.INFORMATION,
-                String.format("CONGRATULATIONS\nYou Win a %s star prize.", this.GAMESTARRATING),ButtonType.OK);
+                String.format("CONGRATULATIONS\nYou Win a %s star prize.", this.GAMESTARRATING), ButtonType.OK);
         alert.showAndWait();
         super.getPrizeTab().setDisable(false);
         super.getPrizeTab().loadPrizes(this.GAMESTARRATING);

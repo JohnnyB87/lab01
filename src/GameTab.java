@@ -107,7 +107,7 @@ public abstract class GameTab extends Tab{
     }
 
     //------------------------------------
-    //			ABSTRACT FUNCTIONALITY
+    //			ABSTRACT METHODS
     //------------------------------------
 
     public abstract void run(String s);
