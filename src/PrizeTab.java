@@ -26,7 +26,7 @@ public class PrizeTab extends Tab{
         tileButtons.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         tileButtons.setAlignment(Pos.CENTER);
         tileButtons.setHgap(5.0);
-        tileButtons.setVgap(8.0);
+        tileButtons.setVgap(10.0);
         tileButtons.setMinHeight(75);
 
 
