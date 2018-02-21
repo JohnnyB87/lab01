@@ -72,13 +72,17 @@ public class PrizeTab extends Tab{
         int i = 0;
 
         for(HashMap.Entry<String,String> entry : this.prizes.entrySet()){
-            this.buttons[i] = new Button(entry.getKey());
-            System.out.println(prizes.get(buttons[i].getText()));
-            //str += e.getValue() + "\n";
-            this.tileButtons.getChildren().add(this.buttons[i]);
-            int j = i;
-            this.buttons[i].setOnAction(e -> {
-                String str = String.format("You won a %s prize.%n", prizes.get(this.buttons[j].getText()));
+
+            Button b = this.buttons[i] = new Button(entry.getKey());
+            System.out.println(prizes.get(b.getText()));
+            this.tileButtons.getChildren().add(b);
+
+            b.setOnAction(e -> {
+                String str = String.format("CONGRATULATIONS%nYou won a %s.%n", prizes.get(b.getText()));
+                for(Button button : buttons)
+                    if(!button.isFocused())
+                        button.setDisable(true);
+
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, str);
                 alert.showAndWait();
             });

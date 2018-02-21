@@ -18,12 +18,12 @@ public class LotteryGameTab extends GameTab {
 	private Alert alert;
 	private RadioButton[] rbArray = new RadioButton[49];
 	private GridPane pane = new GridPane();
+
 	private int[] winningNumbers = generateNumbers();
 	private ArrayList<Integer> numbersSelected = new ArrayList<>();
 	private int count = 0;
 	private boolean sixSelected = false;
 	private int matchingNumbers = 0;
-	//private ToggleGroup tg = new ToggleGroup();
 
     public LotteryGameTab(String title, String buttonName){
         super(title, buttonName);
@@ -164,9 +164,11 @@ public class LotteryGameTab extends GameTab {
     @Override
     public void winner() {
         String match = Integer.toString(this.matchingNumbers);
-    	this.alert = new Alert(Alert.AlertType.INFORMATION,
+
+        this.alert = new Alert(Alert.AlertType.INFORMATION,
                 String.format("CONGRATULATIONS\nYou Win a %s star prize.",match),ButtonType.OK);
-        alert.showAndWait();
+        this.alert.showAndWait();
+
         super.getPrizeTab().setDisable(false);
         super.getPrizeTab().loadPrizes(this.matchingNumbers);
         super.getPrizeTab().showPrizes();
@@ -176,8 +178,9 @@ public class LotteryGameTab extends GameTab {
     public void loser() {
         String array = Arrays.toString(this.winningNumbers);
         String str = String.format("YOU LOSE%nThe winning numbers were: %s", array);
+
         this.alert = new Alert(Alert.AlertType.INFORMATION, str, ButtonType.OK);
-        alert.showAndWait();
+        this.alert.showAndWait();
     }
 
 

@@ -142,7 +142,7 @@ public class GuessingGameTab extends GameTab {
         super.getPrizeTab().showPrizes();
     }
 
-
+    @Override
     public void loser() {
     	String str = String.format("YOU LOSE%nThe winning number was: %d", this.num);
         this.alert = new Alert(Alert.AlertType.INFORMATION, str, ButtonType.OK);
