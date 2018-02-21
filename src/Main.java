@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private int windowWidth = 400;
-    private int windowHeight = 400;
+    private int windowHeight = 350;
 
     public static void main(String[] args){
         launch(args);
@@ -16,10 +16,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Window");
-        primaryStage.setMaxHeight(windowHeight);
-        primaryStage.setMaxWidth(windowWidth);
-        primaryStage.setMinHeight(windowHeight);
-        primaryStage.setMinWidth(windowWidth);
+//        primaryStage.setMaxHeight(windowHeight);
+//        primaryStage.setMaxWidth(windowWidth);
+//        primaryStage.setMinHeight(windowHeight);
+//        primaryStage.setMinWidth(windowWidth);
+        primaryStage.setResizable(false);
 
         TabPane tabPane = new TabPane();
 
