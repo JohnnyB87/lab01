@@ -1,12 +1,9 @@
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.*;
@@ -22,7 +19,6 @@ public class PrizeTab extends Tab{
 
     private HashMap<String, String> prizes;
     private TilePane tileButtons;
-    private Button[] buttons;
     private ListView<String> list;
     private ObservableList<String> items;
 
@@ -40,8 +36,6 @@ public class PrizeTab extends Tab{
 
         this.list = new ListView<>();
 
-        //list.setItems(items);
-
         
         this.list.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
@@ -51,23 +45,17 @@ public class PrizeTab extends Tab{
 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, str);
                     alert.showAndWait();
-
-
-
-                    if(newValue.equals(newValue))
-                        setDisable(false);
-                    else
-                        setDisable(true);
                 }
         );
 
-        //tileButtons.getChildren().add(list);
-        
         this.setContent(this.tileButtons);
 
     }
 
     public void loadPrizes(int n){
+
+        this.items = FXCollections.observableArrayList();
+
         try{
             this.prizes = new HashMap<String, String>();
             String pathToFile = "prizes.txt";
@@ -89,13 +77,13 @@ public class PrizeTab extends Tab{
         }
 
         this.list.setItems(this.items);
+        list.setPrefHeight(this.items.size() * 24 + 2);
         this.tileButtons.getChildren().clear();
         this.tileButtons.getChildren().add(list);
 
     }
 
     public void fillHashMap(int n, String newLine){
-        this.items = FXCollections.observableArrayList();
 
         String[] array = newLine.split(",");
         int prizeValue = -1;
@@ -109,7 +97,7 @@ public class PrizeTab extends Tab{
         if(prizeValue == n) {
             String key = array[1];
             String value = array[2];
-            prizes.put(key, value);
+            this.prizes.put(key, value);
             this.items.add(key);
         }
         else if(prizeValue == -1) {
