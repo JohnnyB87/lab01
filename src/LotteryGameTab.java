@@ -28,7 +28,7 @@ public class LotteryGameTab extends GameTab {
         pane.setHgap(padding);
         pane.setVgap(padding);
         pane.setAlignment(Pos.CENTER);
-        pane.setBackground(new Background(new BackgroundFill(Color.web("#00ff00"), CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setBackground(new Background(new BackgroundFill(Color.web("#d4d4d4"), CornerRadii.EMPTY, Insets.EMPTY)));
 
         super.addPane(pane);
         super.getGuessButton().setDisable(true);
@@ -165,13 +165,13 @@ public class LotteryGameTab extends GameTab {
                 String.format("CONGRATULATIONS\nYou Win a %s star prize.",match),ButtonType.OK);
         this.alert.showAndWait();
 
-        super.getPrizeTab().setDisable(false);
+        //super.getPrizeTab().setDisable(false);
         super.getPrizeTab().loadPrizes(this.matchingNumbers);
-        super.getPrizeTab().showPrizes();
     }
 
     @Override
     public void loser() {
+    	super.loser();
         String array = Arrays.toString(this.winningNumbers);
         String str = String.format("YOU LOSE%nThe winning numbers were: %s", array);
 

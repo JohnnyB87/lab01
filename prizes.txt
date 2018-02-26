@@ -1,9 +1,9 @@
-6,alpha,€100000
-5,bravo,€10000
-4,charlie,Trip to Donegal
-6,delta,Aston Martin
-5,echo,Volvo
-4,foxtrot,Trip to Kerry
-6,golf,One-way Trip to Mars
-4,hotel,Trip to Dublin
-5,juliet,Trip to Dubai
+6,alpha,100000 euros
+5,bravo,10000 euros
+4,charlie,a Trip to Donegal
+6,delta,an Aston Martin
+5,echo,a Volvo
+4,foxtrot,a Trip to Kerry
+6,golf,a One-way Trip to Mars
+4,hotel,a Trip to Dublin
+5,juliet,a Trip to Dubai

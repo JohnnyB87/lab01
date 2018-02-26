@@ -20,14 +20,13 @@ public abstract class GameTab extends Tab{
 
         this.setText(title);
         prizeTab.setDisable(true);
-        String colour = "#111287";
-
+        
         exit.setText("Exit");
         reset.setText("Reset");
         guess.setText(buttonName);
 
         TilePane tileButtons = new TilePane(Orientation.HORIZONTAL);
-        tileButtons.setBackground(new Background(new BackgroundFill(Color.BLUE,CornerRadii.EMPTY,Insets.EMPTY)));
+        tileButtons.setBackground(new Background(new BackgroundFill(Color.web("#d4d4d4"),CornerRadii.EMPTY,Insets.EMPTY)));
         tileButtons.setAlignment(Pos.CENTER);
         tileButtons.setHgap(5.0);
 //        tileButtons.setVgap(8.0);
@@ -40,6 +39,9 @@ public abstract class GameTab extends Tab{
 
         this.pane.setBottom(tileButtons);
         this.setContent(this.pane);
+        
+        if(this.getTabPane() != null)
+        	this.getTabPane().getTabs().add(prizeTab);
 
         exit.setOnAction(e -> exitGame());
 
@@ -70,7 +72,7 @@ public abstract class GameTab extends Tab{
     }
 
     //------------------------------------
-    //			EXTRA FUNCTIONALITY
+    //			SETTERS
     //------------------------------------
 
 	public void setButtonsSize(int buttonWidth) {
@@ -86,6 +88,17 @@ public abstract class GameTab extends Tab{
         this.pane.setCenter(node);
     }
 
+    public void showPrizeTab() {
+    	if(this.getTabPane() != null)
+    		this.getTabPane().getTabs().add(prizeTab);
+    	else 
+    		System.out.println("ERROR: No TAbPAne to add to.");
+    }
+    
+    //------------------------------------
+    //			EXTRA FUNCTIONALITY
+    //------------------------------------
+    
     public void resetGame() {
         this.alert = new Alert(Alert.AlertType.CONFIRMATION,
                 "Are you sure you want to reset the game.\nAll current progress will be lost?"
@@ -109,15 +122,20 @@ public abstract class GameTab extends Tab{
     public void winner(){
         this.exit.setDisable(true);
         this.reset.setDisable(true);
+        
+        prizeTab.setDisable(false);
     }
-
+    
+    public void loser() {
+//    	this.getTabPane().getTabs().add(prizeTab);
+    	prizeTab.setDisable(true);
+    }
+    
     //------------------------------------
     //			ABSTRACT METHODS
     //------------------------------------
 
     public abstract void run(String s);
-
-    public abstract void loser();
 
     public abstract void checkResult(int n);
 }

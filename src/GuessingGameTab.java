@@ -43,7 +43,7 @@ public class GuessingGameTab extends GameTab {
         this.label.setLayoutY(80);
 
         this.pane.getChildren().addAll(txtFld, label);
-        this.pane.setBackground(new Background(new BackgroundFill(Color.web("#ff0000"), CornerRadii.EMPTY, Insets.EMPTY)));
+        this.pane.setBackground(new Background(new BackgroundFill(Color.web("#d4d4d4"), CornerRadii.EMPTY, Insets.EMPTY)));
         super.addPane(this.pane);
 
         super.getResetButton().setOnAction(e -> resetGame());
@@ -136,13 +136,13 @@ public class GuessingGameTab extends GameTab {
         this.alert = new Alert(Alert.AlertType.INFORMATION,
                 String.format("CONGRATULATIONS\nYou Win a %s star prize.", this.GAMESTARRATING), ButtonType.OK);
         alert.showAndWait();
-        super.getPrizeTab().setDisable(false);
+        //super.getPrizeTab().setDisable(false);
         super.getPrizeTab().loadPrizes(this.GAMESTARRATING);
-        super.getPrizeTab().showPrizes();
     }
 
     @Override
     public void loser() {
+    	super.loser();
     	String str = String.format("YOU LOSE%nThe winning number was: %d", this.num);
         this.alert = new Alert(Alert.AlertType.INFORMATION, str, ButtonType.OK);
         alert.showAndWait();

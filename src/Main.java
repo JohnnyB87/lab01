@@ -26,11 +26,17 @@ public class Main extends Application {
 
         GuessingGameTab guessingGameTab = new GuessingGameTab("Guessing Game","Guess");
         LotteryGameTab lotteryGameTab = new LotteryGameTab("Lottery Game","Submit");
-        PrizeTab prizes = guessingGameTab.getPrizeTab();
+        //PrizeTab prizeTab = guessingGameTab.getPrizeTab();
+        
+        guessingGameTab.setClosable(false);
+        lotteryGameTab.setClosable(false);
+        //prizeTab.setClosable(false);
         
         tabPane.getTabs().add(guessingGameTab);
         tabPane.getTabs().add(lotteryGameTab);
-        tabPane.getTabs().add(prizes);
+        guessingGameTab.showPrizeTab();
+        
+        //tabPane.getTabs().add(prizeTab);
 
         StackPane layout = new StackPane();
         layout.getChildren().add(tabPane);
