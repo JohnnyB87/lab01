@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.*;
@@ -23,30 +24,20 @@ public class PrizeTab extends Tab{
     private ObservableList<String> items;
 
 
-    public PrizeTab() {
+    public PrizeTab(String colour) {
         this.setText("Prizes");
         this.setClosable(false);
 
-        tileButtons = new TilePane(Orientation.VERTICAL);
-        tileButtons.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        tileButtons.setAlignment(Pos.CENTER);
-        tileButtons.setHgap(5.0);
-        tileButtons.setVgap(10.0);
-        tileButtons.setMinHeight(75);
+        Label label = new Label("CONGRATULATIONS");
+        label.setAlignment(Pos.BASELINE_CENTER);
 
-        this.list = new ListView<>();
-
-        
-        this.list.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    System.out.println("You selected " + newValue);
-
-                    String str = "You won \n" + prizes.get(newValue);
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, str);
-                    alert.showAndWait();
-                }
-        );
+        this.tileButtons = new TilePane(Orientation.VERTICAL);
+        this.tileButtons.setBackground(new Background(new BackgroundFill(Color.web(colour), CornerRadii.EMPTY, Insets.EMPTY)));
+        this.tileButtons.setAlignment(Pos.CENTER);
+        this.tileButtons.setHgap(5.0);
+        this.tileButtons.setVgap(10.0);
+        this.tileButtons.setMinHeight(75);
+        this.tileButtons.getChildren().add(label);
 
         this.setContent(this.tileButtons);
 
@@ -57,7 +48,7 @@ public class PrizeTab extends Tab{
         this.items = FXCollections.observableArrayList();
 
         try{
-            this.prizes = new HashMap<String, String>();
+            this.prizes = new HashMap<>();
             String pathToFile = "prizes.txt";
 
             File readMe = new File(pathToFile);
@@ -76,10 +67,11 @@ public class PrizeTab extends Tab{
 
         }
 
-        this.list.setItems(this.items);
-        list.setPrefHeight(this.items.size() * 24 + 2);
+        createListView();
+
         this.tileButtons.getChildren().clear();
-        this.tileButtons.getChildren().add(list);
+        this.tileButtons.getChildren().add(this.list);
+
 
     }
 
@@ -105,6 +97,27 @@ public class PrizeTab extends Tab{
         }
 
 
+    }
+
+    private void createListView(){
+        this.list = new ListView<>();
+
+        this.list.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    System.out.println("You selected " + newValue);
+
+                    String str = "You won \n" + prizes.get(newValue);
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, str);
+                    alert.showAndWait();
+
+                    this.setDisable(true);
+                }
+        );
+
+        this.list.setItems(this.items);
+        this.list.getSelectionModel().clearSelection();
+        this.list.setPrefHeight((this.items.size() + 2)* 24 + 2);
     }
 
 }

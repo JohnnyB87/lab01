@@ -19,8 +19,8 @@ public class LotteryGameTab extends GameTab {
 	private boolean sixSelected = false;
 	private int matchingNumbers = 0;
 
-    public LotteryGameTab(String title, String buttonName){
-        super(title, buttonName);
+    public LotteryGameTab(String title, String buttonName, String colour){
+        super(title, buttonName, colour);
 
         createRadioButtonLayout();
 
@@ -28,7 +28,7 @@ public class LotteryGameTab extends GameTab {
         pane.setHgap(padding);
         pane.setVgap(padding);
         pane.setAlignment(Pos.CENTER);
-        pane.setBackground(new Background(new BackgroundFill(Color.web("#d4d4d4"), CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setBackground(new Background(new BackgroundFill(Color.web(colour), CornerRadii.EMPTY, Insets.EMPTY)));
 
         super.addPane(pane);
         super.getGuessButton().setDisable(true);

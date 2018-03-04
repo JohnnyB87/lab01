@@ -24,19 +24,16 @@ public class Main extends Application {
 
         TabPane tabPane = new TabPane();
 
-        GuessingGameTab guessingGameTab = new GuessingGameTab("Guessing Game","Guess");
-        LotteryGameTab lotteryGameTab = new LotteryGameTab("Lottery Game","Submit");
-        //PrizeTab prizeTab = guessingGameTab.getPrizeTab();
+        String colour = "#bcbcbc";
+        GuessingGameTab guessingGameTab = new GuessingGameTab("Guessing Game","Guess", colour);
+        LotteryGameTab lotteryGameTab = new LotteryGameTab("Lottery Game","Submit", colour);
         
         guessingGameTab.setClosable(false);
         lotteryGameTab.setClosable(false);
-        //prizeTab.setClosable(false);
         
         tabPane.getTabs().add(guessingGameTab);
         tabPane.getTabs().add(lotteryGameTab);
         guessingGameTab.showPrizeTab();
-        
-        //tabPane.getTabs().add(prizeTab);
 
         StackPane layout = new StackPane();
         layout.getChildren().add(tabPane);

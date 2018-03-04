@@ -28,8 +28,8 @@ public class GuessingGameTab extends GameTab {
     //			CONSTRUCTOR
     //------------------------------------
     
-    public GuessingGameTab(String title, String buttonName){
-        super(title, buttonName);
+    public GuessingGameTab(String title, String buttonName, String colour){
+        super(title, buttonName, colour);
 
         this.txtFld = new TextField();
         this.txtFld.setLayoutX(125);
@@ -43,7 +43,7 @@ public class GuessingGameTab extends GameTab {
         this.label.setLayoutY(80);
 
         this.pane.getChildren().addAll(txtFld, label);
-        this.pane.setBackground(new Background(new BackgroundFill(Color.web("#d4d4d4"), CornerRadii.EMPTY, Insets.EMPTY)));
+        this.pane.setBackground(new Background(new BackgroundFill(Color.web(colour), CornerRadii.EMPTY, Insets.EMPTY)));
         super.addPane(this.pane);
 
         super.getResetButton().setOnAction(e -> resetGame());

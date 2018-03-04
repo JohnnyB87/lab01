@@ -9,15 +9,16 @@ import javafx.scene.paint.Color;
 
 public abstract class GameTab extends Tab{
 
-	private static PrizeTab prizeTab = new PrizeTab();
+	private static PrizeTab prizeTab;
   	private BorderPane pane = new BorderPane();
     private Button exit = new Button();
     private Button reset = new Button();
     private Button guess = new Button();
     private Alert alert;
 
-    public GameTab(String title, String buttonName) {
+    public GameTab(String title, String buttonName,String colour) {
 
+        prizeTab = new PrizeTab(colour);
         this.setText(title);
         prizeTab.setDisable(true);
         
@@ -26,7 +27,7 @@ public abstract class GameTab extends Tab{
         guess.setText(buttonName);
 
         TilePane tileButtons = new TilePane(Orientation.HORIZONTAL);
-        tileButtons.setBackground(new Background(new BackgroundFill(Color.web("#d4d4d4"),CornerRadii.EMPTY,Insets.EMPTY)));
+        tileButtons.setBackground(new Background(new BackgroundFill(Color.web(colour),CornerRadii.EMPTY,Insets.EMPTY)));
         tileButtons.setAlignment(Pos.CENTER);
         tileButtons.setHgap(5.0);
 //        tileButtons.setVgap(8.0);
