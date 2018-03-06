@@ -43,18 +43,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-
-        System.out.println("EXIT LIGHTK");
-        System.out.println("EXIT LIGHTK");
-        System.out.println("EXIT LIGHTK");
-        System.out.println("EXIT LIGHTK");
-        System.out.println("EXIT LIGHTK");
-        System.out.println("EXIT LIGHTK");
-        System.out.println("EXIT LIGHTK");
-        System.out.println("EXIT LIGHTK");
-        System.out.println("EXIT LIGHTK");
-        System.out.println("EXIT LIGHTK");
-
     }
 
 }
